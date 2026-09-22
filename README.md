@@ -1,89 +1,55 @@
-# Trabalho 2: Implementação de Player com Algoritmo de Dijkstra
+# 🗺️ Pathfinding Simulator: Dijkstra & A* (Processing)
 
-## Objetivo
+[![Project Status](https://img.shields.io/badge/status-completed-green.svg)]()
+[![Technology](https://img.shields.io/badge/technology-Processing%20%2F%20Java-blue.svg)]()
 
-O objetivo deste trabalho é implementar um player que se movimenta pelo caminho mais rápido no mapa utilizando o algoritmo de Dijkstra. O player deve ser capaz de se mover por diferentes tipos de terreno (grama, areia, água) e evitar obstáculos (pedras, cactos, corais). Um barco será colocado aleatoriamente no mapa, permitindo que o player navegue na água com velocidade dobrada. A implementação do algoritmo A* para a movimentação do player será recompensada com pontos extras.
+> An interactive autonomous pathfinding simulator developed in Processing, designed to calculate optimized movement routes using **Dijkstra** and **A\*** algorithms across complex terrains with dynamic obstacles and inventory mechanics.
 
-## Estrutura do Trabalho
+---
 
-O trabalho será realizado em grupos de 4 alunos e será avaliado em três aspectos: código, apresentação e relatório. A distribuição de pontos é a seguinte:
+## 🎯 About the Project
 
-- **Código**: 5 pontos
-- **Apresentação**: 5 pontos
-- **Relatório**: 5 pontos
-- **Implementação do Algoritmo A***: 1 ponto extra
-- **Implementação de um objetivo para o jogo**: 1 ponto extra
+This academic project implements and visualizes classical graph search algorithms applied to a grid-based map featuring varying terrain costs, static obstacles, and interactive items. The system dynamically computes the fastest route while managing movement speed penalties and resource acquisition (such as a boat for water navigation).
 
-## Requisitos do Trabalho
+---
 
-### Implementação do Player
+## 🚀 Features and Game Rules
 
-1. **Criação da Classe `Player`**
-   - Atributos: posição, velocidade, indicador de posse do barco.
-   - Inicialize o player em uma posição padrão no mapa (ex.: no centro).
+### 🕹️ Player & Movement System
+* **Player Class:** Manages real-time attributes including spatial coordinates, movement speed, and inventory status (boat possession indicator).
+* **Mouse Interaction:** The player autonomously navigates from its current location to any clicked destination on the map.
+* **Camera Control:** Pressing the **`P`** key instantly centers the viewport on the player's current position.
 
-2. **Movimentação**
-   - O player deve se mover do ponto inicial até o ponto clicado no mapa, utilizando o algoritmo de Dijkstra.
-   - O player pode andar na grama e na areia, com velocidade reduzida na areia pela metade.
-   - O player pode viajar na água apenas quando está de posse de um barco, com velocidade dobrada.
+### 🌿 Terrains and Cost Mechanics
+Different surfaces alter both the player's movement speed and the edge weights inside the underlying graph:
 
-   **Velocidades:**
-   - Grama: 1 bloco/segundo
-   - Areia: 0,5 blocos/segundo
-   - Água com barco: 2 blocos/segundo
+| Terrain | Player Speed | Dijkstra Edge Weight |
+| :--- | :--- | :--- |
+| **Grass** | 1 block / second | `2` |
+| **Sand** | 0.5 blocks / second (Half speed) | `3` |
+| **Water (With Boat)** | 2 blocks / second (Double speed) | `1` |
+| **Water (Without Boat)** | *Impassable* | `Infinity` |
 
-3. **Obstáculos**
-   - O player não pode atravessar obstáculos (pedras, cactos, corais).
+* **Static Obstacles:** Non-traversable elements such as rocks, cacti, and corals block any pathing attempts.
+* **Boat Mechanic:** A boat spawns randomly on the map within a 100-block radius of the player's initial spawn, unlocking water pathways upon collection.
 
-### Implementação do Algoritmo de Dijkstra
+---
 
-1. **Algoritmo de Dijkstra**
-   - Implemente o algoritmo para calcular o caminho mais curto.
-   - Utilize pesos para os diferentes tipos de terreno. O peso de uma aresta é a média dos pesos dos dois vértices que formam a aresta.
-   
-   **Pesos:**
-   - Água: 1 com barco, infinito sem barco
-   - Grama: 2
-   - Areia: 3
+## 🧠 Architecture & Algorithms
 
-### Adicionar um Barco
+1. **Graph Modeling:** The map is structured as a grid where each tile acts as a graph vertex. Edge weights between adjacent vertices are determined by calculating the average weight of both connected tiles.
+2. **Dijkstra's Algorithm:** Implemented to guarantee the absolute shortest path based on cumulative weighted costs.
+3. **A\* Algorithm (Bonus Optimization):** Optional heuristic implementation utilizing Manhattan or Euclidean distance calculations to optimize search performance.
 
-1. **Colocação do Barco**
-   - Coloque um barco em uma posição aleatória do mapa, não mais distante do que 100 blocos do ponto inicial do player.
-   - Se o player pegar o barco, ele pode se mover na água.
+---
 
-### Ações no Mapa
+## 📂 Repository Structure
 
-1. **Centralização**
-   - Ao apertar a tecla 'P', o mapa deve ser centralizado no player.
-
-## Relatório
-
-O relatório deve incluir:
-
-1. **Introdução**
-   - Descrição do problema e das funcionalidades implementadas.
-
-2. **Implementação**
-   - Descrição detalhada da implementação do algoritmo de Dijkstra e suas adaptações.
-   - Explicação de como a centralização foi implementada.
-   - Explicação de trechos relevantes do código.
-
-3. **Capturas de Tela**
-   - Mostrando o funcionamento do código.
-
-4. **Reflexão**
-   - Sobre os desafios encontrados e como foram superados.
-
-## Apresentação
-
-A apresentação deve ser feita por todos os membros do grupo, com duração de 10 minutos e deve incluir:
-
-1. **Visão Geral**
-   - Do projeto e funcionalidades implementadas.
-
-2. **Demonstração**
-   - Do código funcionando.
-
-3. **Algoritmos**
-   - Explicação do algoritmo de Dijkstra e, se implementado, do algoritmo
+```text
+├── PathfindingSimulator/     # Main Processing sketch folder
+│   ├── PathfindingSimulator.pde # Core logic, drawing loop, and event handling
+│   ├── Player.pde           # Player class and movement logic
+│   ├── Dijkstra.pde         # Graph creation and pathfinding algorithms
+│   └── Map.pde              # Grid management and rendering
+├── data/                    # Images, sprites, and assets
+└── README.md                # Project documentation
